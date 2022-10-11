@@ -1,0 +1,52 @@
+﻿@model DashboardViewModel;
+@{
+  ViewData["Title"] = "Home Page";
+}
+<div id="rechorder-main-screen">
+  <div id="file-list">
+    @foreach (var file in Model.Files)
+    {
+      <a
+      href='@Url.Action("Index", "Home", new { file })'>@System.IO.Path.GetFileNameWithoutExtension(file.FullName)</a><br />
+    }
+  </div>
+  <div id="chord-names" style="position: relative;">
+    <div style="z-index: 3; position: absolute; width: 100%; height: 100%;" id="chord-names-div">@Model.ChordNames</div>
+    <textarea style="z-index: 2; position: absolute; width: 100%; height: 100%;" id="chord-names-textarea">@Model.ChordNames
+    </textarea>
+
+  </div>
+  <div id="video-player">
+    @if (Model.SelectedFile != "")
+    {
+      <video src="/videos/@System.IO.Path.GetFileName(Model.SelectedFile)" style="width: 100%;" controls="true"></video>
+    }
+    <span id="clock"
+      style="z-index: 2; font-size: 12px; border-radius: 2px; padding: 4px; position: absolute; top: 4px; right: 4px; background-color: rgba(255,255,255,0.6);">CLOCK</span>
+  </div>
+  <div id="button-wrapper">
+    <fieldset id="playback-speed-selector">
+      Speed:
+      <label for="playback-speed-10"><input type="radio" id="playback-speed-10" name="playback-speed" value="1.0"
+          checked="checked" /> 1.0</label>
+      <label for="playback-speed-12"><input type="radio" id="playback-speed-12" name="playback-speed" value="1.2" />
+        1.2</label>
+      <label for="playback-speed-15"><input type="radio" id="playback-speed-15" name="playback-speed" value="1.5" />
+        1.5</label>
+      <label for="playback-speed-18"><input type="radio" id="playback-speed-18" name="playback-speed" value="1.8" />
+        1.8</label>
+    </fieldset>
+    <input type="button" name="button" value="BHUNG" id="go-button" />
+  </div>
+  <div id="chord-times">
+    <textarea style="width: 100%; height: 100%;" id="chord-times-textarea">@Model.ChordTimes</textarea>
+  </div>
+</div>
+@section Scripts {
+<script src="/js/tonal.js"></script>
+<script src="/js/audiosynth.js"></script>
+<script src="/js/rechorder.js"></script>
+<script>
+  rechorder('@Html.Raw(System.IO.Path.GetFileNameWithoutExtension(Model.SelectedFile).Replace("'", "\\'"))');
+</script>
+}

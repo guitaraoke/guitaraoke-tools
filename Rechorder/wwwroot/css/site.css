@@ -1,0 +1,84 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+textarea, div#chord-names-div {
+  font-family: Consolas;
+  padding: 8px;
+  line-spacing: 1.2em;
+  white-space: pre;
+  margin: 0;
+  border: 0;
+  padding: 8px;
+  overflow-y: scroll;
+  background-color: #f5f5f5;
+}
+
+div#chord-names-div span {
+  outline: 4px solid #f0f;
+  border-radius: 2px;
+  background-color: #f0f;
+}
+
+div#rechorder-main-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 2fr 3fr 480px;
+  grid-template-rows: 270px 30px 1fr;
+}
+
+div#file-list {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  padding: 8px;
+  border-right: 1px solid #000;
+  overflow: scroll;
+}
+div#chord-names {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  border-right: 1px solid #000;
+}
+div#video-player {
+  grid-column: 3;
+  grid-row: 1;
+  background-color: #f90;
+}
+div#button-wrapper {
+  grid-column: 3;
+  grid-row: 2;
+}
+div#button-wrapper fieldset {
+float: left;
+}
+
+div#button-wrapper > input {
+  float: right;
+  height: 100%;
+  
+}
+
+div#chord-times {
+  grid-column: 3;
+  grid-row: 3;
+  background-color: #0ff;
+}
