@@ -167,7 +167,36 @@ function rechorder(file) {
         extractChords(this.value);
     });
 
+    function drawDataBars() {
+        
+        var chordTimesList = document
+            .getElementById("chord-times-textarea").value;
+        
+        var chords = chordTimesList.split(/\n/)
+            .filter(c => c.split)
+            .map(c => c.split(/[: ]+/))
+            .map(pair => ({ name: pair[1], time: pair[0] }));
+        for(var i = 1; i < chords.length; i++) {
+             chords[i-1].duration = chords[i].time - chords[i-1].time;
+         }
+        var max = Math.max.apply(null, chords.map(c => c.duration || 0));
+        var container = document.querySelector("div#chord-times div");
+        container.innerHTML = "";
+        var textarea = document.getElementById("chord-times-textarea")
+        var lineHeight = parseInt(window.getComputedStyle(textarea)["line-height"]);
+
+        
+        console.log(lineHeight);
+        for(var i = 0; i < chords.length; i++) {
+            var span = document.createElement('span');
+            span.style.top = (4 + (i * lineHeight)) + "px";
+            span.style.width = (100 * (chords[i].duration / max)) + "px";
+            container.appendChild(span);
+        }
+    }
+
     document.getElementById("chord-times-textarea").addEventListener("keyup", function () {
+        drawDataBars();
         var data = {
             file: file,
             chordTimes: this.value
@@ -175,5 +204,6 @@ function rechorder(file) {
         console.log(data);
         $.post('/Home/ChordTimes', data);
     });
+    drawDataBars();
 
 }

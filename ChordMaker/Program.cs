@@ -159,14 +159,15 @@ static ChordMaker.ffmpeg.FFProbeStream GetVideoStats(string videoFilePath) {
 
 
 static (byte, byte, byte) GetColorForSong(string bareFileName) {
+    (byte,byte,byte) DEFAULT_RGB_VALUE = (0, 0, 0);
     Console.WriteLine($"finding colour for {bareFileName}");
     var colors = File.ReadAllLines("colors.txt");
     var color = colors.FirstOrDefault(c => c.StartsWith(bareFileName, StringComparison.OrdinalIgnoreCase));
-    if (color == null) return (80, 80, 80);
+    if (color == null) return DEFAULT_RGB_VALUE;
     var tokens = color.Split(":");
-    if (tokens.Length < 2) return (80, 80, 80);
+    if (tokens.Length < 2) return DEFAULT_RGB_VALUE;
     var rgb = tokens[1].Split(",").Select(byte.Parse).ToList();
-    if (rgb.Count < 3) return (80, 80, 80);
+    if (rgb.Count < 3) return DEFAULT_RGB_VALUE;
     var r = rgb[0];
     var g = rgb[1];
     var b = rgb[2];
