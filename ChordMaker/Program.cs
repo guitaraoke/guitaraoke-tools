@@ -5,6 +5,7 @@ using FFMpegCore.Pipes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SixLabors.ImageSharp;
+using System.Text;
 
 int fpsMultiplier = 2;
 float duration = Int32.MaxValue;
