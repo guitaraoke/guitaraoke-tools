@@ -145,9 +145,10 @@ static ChordMaker.ffmpeg.FFProbeStream GetVideoStats(string videoFilePath) {
     Console.WriteLine($"ffprobe {ffprobeArguments}");
     using (Process? ffprobe = Process.Start(startInfo)) {
         if (ffprobe != null) {
+            var stdout = new StringBuilder();
+            ConsumeReader(ffprobe.StandardOutput, stdout);
             ffprobe.WaitForExit();
-            var json = ffprobe.StandardOutput.ReadToEnd();
-            Console.WriteLine(json);
+            var json = stdout.ToString();
             var result = JsonConvert.DeserializeObject<FFProbeResult>(json);
             if (result != null) {
                 return result.Streams.FirstOrDefault(s => s.CodecType == "video");                
@@ -157,6 +158,10 @@ static ChordMaker.ffmpeg.FFProbeStream GetVideoStats(string videoFilePath) {
     throw new Exception($"Couldn't read FPS from {videoFilePath}");
 }
 
+static async Task ConsumeReader(TextReader reader, StringBuilder sb) {
+    string text;
+    while ((text = await reader.ReadLineAsync()) != null) sb.AppendLine(text);
+}
 
 static (byte, byte, byte) GetColorForSong(string bareFileName) {
     (byte,byte,byte) DEFAULT_RGB_VALUE = (0, 0, 0);
