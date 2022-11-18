@@ -79,7 +79,7 @@ public class FrameMaker {
 
         // Chords on screen are actually a tiny bit earlier than real time
         // because brains are weird and are used to seeing things before we hear them.
-        const float CHORD_NUDGE_IN_PIXELS = 16f;
+        const float CHORD_NUDGE_IN_PIXELS = 48f;
 
         using Image<Rgba32> emptyFrame = new(Width, Height, Color.Transparent);
         emptyFrame.Mutate(x => x

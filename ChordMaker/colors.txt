@@ -68,4 +68,6 @@ Tina Turner - Steamy Windows (with harmonica) - Guitaraoke
 Wet Leg - Chaise Longue - Guitaraoke
 Wheatus - Teenage Dirtbag - Guitaraoke
 White Stripes - Seven Nation Army - Guitaraoke
+Toto - House of the Rising Sun - Guitaraoke:75,130,240
+The Cranberries - Zombie - Guitaraoke:200,50,40
 
