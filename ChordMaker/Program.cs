@@ -11,8 +11,8 @@ int fpsMultiplier = 2;
 float duration = Int32.MaxValue;
 if (args.Length > 1) float.TryParse(args[1], out duration);
 var draft = (args.Length > 2 && args[2] == "draft");
-const int MAX_CHORD_SPEED = 120; // Maximum chord speed in pixels per second
-const int MIN_CHORD_SPEED = 80; //
+const int MAX_CHORD_SPEED = 140; // Maximum chord speed in pixels per second
+const int MIN_CHORD_SPEED = 100; //
 string videoPath = args[0];
 var stats = GetVideoStats(videoPath);
 var FPS = (float)Math.Round((double)stats.FPS, (draft ? 1 : fpsMultiplier));
@@ -25,7 +25,7 @@ string chordListFilePath = Path.Combine(directory, "_chords", filename + " - cho
 string chordWebmFilePath = Path.Combine(directory, "_chords", "output", filename + " - chords.webm");
 string outputFilePath = Path.Combine(directory, "_chords", "output", filename + " - with chords.mp4");
 
-var lines = File.ReadAllLines(chordListFilePath);
+var lines = File.ReadAllLines(chordListFilePath).Where(line => ! String.IsNullOrWhiteSpace(line));
 var bareFileName = System.IO.Path.GetFileNameWithoutExtension(videoPath);
 var tokens = bareFileName.Split(" - ");
 var artist = tokens[0];
@@ -44,7 +44,9 @@ Console.WriteLine($"Chords:  {chordListFilePath}");
 Console.WriteLine($"Overlay: {chordWebmFilePath}");
 Console.WriteLine($"Output:  {outputFilePath}");
 
-var chords = File.ReadAllLines(chordListFilePath).Select(line => new Chord(line)).ToList();
+var chords = File.ReadAllLines(chordListFilePath).Select(line => new Chord(line))
+    .Where(chord => chord.Time >= 0)
+    .ToList();
 for (var i = 1; i < chords.Count; i++) {
     chords[i - 1].Duration = chords[i].Time - chords[i - 1].Time;
 }

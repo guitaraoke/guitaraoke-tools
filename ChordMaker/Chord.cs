@@ -18,17 +18,27 @@ public class Chord {
         Time = 0f;
         Name = String.Empty;
         ExtraBit = String.Empty;
-        var tokens = regex.Split(line);
-        if (tokens.Length > 1) {
-            Time = float.Parse(tokens[0].Trim());
-            (Name, ExtraBit) = ParseChord(tokens[1].Trim());
+        try {
+            var tokens = regex.Split(line.Trim());
+            Console.WriteLine(tokens[0]);
+            if (tokens.Length > 1) {
+                Time = (float) (double.Parse(tokens[0].Trim()));
+                (Name, ExtraBit) = ParseChord(tokens[1].Trim());
+            }
+        }
+        catch (FormatException ex) {
+            Console.Error.WriteLine(ex.Message);
+            Console.Error.WriteLine(line);
+            Time = -1;
+            Name = ex.Message;
+
         }
     }
     private (string, string) ParseChord(string chord) {
         return chord switch {
             "NC" => ("×", ""),
             "n.c" => ("×", ""),
-            _ => (chord.Substring(0,1), chord.Substring(1))
+            _ => (chord.Substring(0, 1), chord.Substring(1))
         };
     }
 }
