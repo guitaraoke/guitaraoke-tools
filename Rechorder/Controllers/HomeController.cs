@@ -14,28 +14,49 @@ public class HomeController : Controller {
     }
 
     public IActionResult Index(string file = "") {
+        var finishedFilePath = Directory.GetParent(RootPath).FullName;
+        var finishedFiles = Directory
+            .GetFiles(Path.Combine(finishedFilePath, "4 Finished"))
+            .Select(f => Path.GetFileName(f));           ;
+        foreach(var ff in finishedFiles) logger.LogInformation(ff);
+
         logger.LogInformation(file);
-        var files = Directory
-            .GetFiles(RootPath)
+        var mixes = Directory
+            .GetFiles(Path.Combine(RootPath, "2 Mixes"))
             .Where(file => file.EndsWith(".mp4"))
+            .Where(file => ! finishedFiles.Contains(Path.GetFileName(file).Replace(".mp4", " - with chords.mp4")))            
             .Select(file => new FileInfo(file))
             .OrderBy(f => f.Name);
 
-        var chordNamesFilePath = Path.Combine("chord-names", Path.GetFileName(file).Replace(".mp4", " - chord names.txt"));
+        var chordNamesFilePath = GetChordNamesFilePath(file);
         logger.LogInformation(chordNamesFilePath);
-        var chordNames = System.IO.File.Exists(chordNamesFilePath) ? System.IO.File.ReadAllText(chordNamesFilePath) : "";
+        Console.WriteLine(chordNamesFilePath);
+        var chordNames = System.IO.File.Exists(chordNamesFilePath) ? System.IO.File.ReadAllText(chordNamesFilePath) : 
+            $"{chordNamesFilePath} does not exist"
+        ;
 
-        var chordTimesFilePath = Path.Combine("chord-times", Path.GetFileName(file).Replace(".mp4", " - chord times.txt"));
+        var chordTimesFilePath = GetChordTimesFilePath(file);
         var chordTimes = System.IO.File.Exists(chordTimesFilePath) ? System.IO.File.ReadAllText(chordTimesFilePath) : "";
         
         var model = new DashboardViewModel {
-            Files = files,
+            Files = mixes,
             SelectedFile = file,
+            RootPath = RootPath,
+            ChordNamesFilePath = Path.GetFullPath(chordNamesFilePath),
+            ChordTimesFilePath = Path.GetFullPath(chordTimesFilePath),
             ChordNames = chordNames,
             ChordTimes = chordTimes 
         };
 
         return View(model);
+    }
+
+    private string GetChordNamesFilePath(string file) {
+        return Path.Combine(RootPath, "3 Chords", Path.GetFileName(file).Replace(".mp4", "") + " - chord names.txt");
+    }
+
+    private string GetChordTimesFilePath(string file) {
+        return Path.Combine(RootPath, "3 Chords", Path.GetFileName(file).Replace(".mp4", "") + " - chord times.txt");
     }
 
     public IActionResult Privacy() {
@@ -48,12 +69,12 @@ public class HomeController : Controller {
     }
     
     public ActionResult ChordNames(string file, string chordNames) {
-        var filePath = Path.Combine("chord-names", Path.GetFileName(file) + " - chord names.txt");
+        var filePath = GetChordNamesFilePath(file);
         System.IO.File.WriteAllText(filePath, chordNames);
         return NoContent();
     }    
     public ActionResult ChordTimes(string file, string chordTimes) {
-        var filePath = Path.Combine("chord-times", Path.GetFileName(file) + " - chord times.txt");
+        var filePath = GetChordTimesFilePath(file);
         System.IO.File.WriteAllText(filePath, chordTimes);
         return NoContent();
     }

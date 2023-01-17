@@ -14,7 +14,7 @@ public class ImageVideoFrameWrapper<T> : IVideoFrame, IDisposable where T : unma
     }
 
     public void Serialize(Stream stream) {
-        byte[] pixelBytes = new byte[Source.Width * Source.Height * Unsafe.SizeOf<Rgba32>()];
+        var pixelBytes = new byte[Source.Width * Source.Height * Unsafe.SizeOf<Rgba32>()];
         Source.CopyPixelDataTo(pixelBytes);
         stream.Write(pixelBytes, 0, pixelBytes.Length);
     }

@@ -152,7 +152,7 @@ function rechorder(file) {
 
     function extractChords(text) {
         let chords = [];
-        const regexp = /\b(NC|[A-G][b#]?(M|m|maj|)?[5679]?(?:(b|add)(4|5|6|9|11|13))?(?:sus[24]|dim|aug)?(?:\/[A-G][b#]?)?)\s/g;
+        const regexp = /\b(NC|[A-G][b#]?(M|m|maj|aug|dim)?[5679]?(?:(b|add)(4|5|6|9|11|13))?(?:sus[24]|dim|aug)?(?:\/[A-G][b#]?)?)\s/g;
         while (match = regexp.exec(text)) chords.push(match);
         return chords;
     }
@@ -163,7 +163,9 @@ function rechorder(file) {
             chordNames: this.value
         };
         console.log(data);
-        $.post('/Home/ChordNames', data);
+        $.post('/Home/ChordNames', data, function() {
+            console.log("Updated chord names");
+        });
         extractChords(this.value);
     });
 
@@ -180,7 +182,7 @@ function rechorder(file) {
              chords[i-1].duration = chords[i].time - chords[i-1].time;
          }
         var max = Math.max.apply(null, chords.map(c => c.duration || 0));
-        var container = document.querySelector("div#chord-times div");
+        var container = document.querySelector("div#chord-times div div");
         container.innerHTML = "";
         var textarea = document.getElementById("chord-times-textarea")
         var lineHeight = parseInt(window.getComputedStyle(textarea)["line-height"]);

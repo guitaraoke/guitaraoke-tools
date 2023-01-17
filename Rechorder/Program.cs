@@ -3,40 +3,28 @@ using Microsoft.Extensions.FileProviders;
 public class Program {
     public static string RootPath = @"C:\Users\dylan\dropbox\creative\guitaraoke\tagged";
     public static void Main(string[] args) {
-
-
         var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddDirectoryBrowser();
-
         var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment()) {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         var paths = new[] {
-    @"C:\Users\dylan\Dropbox\creative\guitaraoke\tagged",
-    @"D:\Dropbox\creative\guitaraoke\tagged",
-    @"/Users/Dylan/Dropbox/Creative/Guitaraoke/tagged"
-};
+            @"C:\Users\dylan\Dropbox\creative\guitaraoke\",
+            @"D:\Dropbox\creative\guitaraoke\",
+            @"/Users/Dylan/Dropbox/Creative/Guitaraoke/"
+        };
+
         PhysicalFileProvider FileProvider = null;
         foreach (var path in paths) {
+            var mixesDirectoryName = Path.Combine(path, "2 Mixes");
             if (Directory.Exists(path)) {
-                FileProvider = new PhysicalFileProvider(path);
-                RootPath = path;    
+                FileProvider = new PhysicalFileProvider(mixesDirectoryName);
+                RootPath = path;
                 break;
             }
         }
-        if (FileProvider == null) throw new Exception("Could not find tagged directory");
+        if (FileProvider == null) throw new Exception("Could not find Guitaraoke directory");
 
         var RequestPath = new PathString("/videos");
         app.UseStaticFiles(new StaticFileOptions() {
@@ -53,7 +41,6 @@ public class Program {
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
-
         app.Run();
     }
 }

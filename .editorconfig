@@ -2,26 +2,17 @@ root = true
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
 
 [*.*]
-charset = utf-8
-[*.cshtml]
-indent_size = 2
-indent_style = space
-
-# C# files
-[*.cs]
-
-#### Core EditorConfig Options ####
-
-# Indentation and spacing
-indent_size = 4
-indent_style = space
+indent_style = tab
+indent_size = tab
 tab_width = 4
-
-# New line preferences
+charset = utf-8
+line_ending = lf
+trim_trailing_whitespace = true
 insert_final_newline = true
 
-#### .NET Coding Conventions ####
-
+[*.cs]
+# C# files
+[*.cs]
 # Organize usings
 dotnet_separate_import_directive_groups = false
 
@@ -218,7 +209,7 @@ resharper_csharp_max_line_length = 140
 resharper_csharp_naming_rule.event = AaBb
 resharper_csharp_naming_rule.interfaces = I + AaBb
 resharper_csharp_naming_rule.method = AaBb
-resharper_csharp_naming_rule.private_constants = AaBb
+resharper_csharp_naming_rule.private_constants = AA_BB
 resharper_csharp_naming_rule.private_static_fields = aaBb
 resharper_csharp_naming_rule.private_static_readonly = aaBb
 resharper_csharp_naming_rule.property = AaBb
@@ -273,7 +264,7 @@ dotnet_naming_rule.non_field_members_should_be_pascal_case.resharper_description
 dotnet_naming_rule.non_field_members_should_be_pascal_case.resharper_guid = 21d958be-2191-4ce6-81fb-2470149ed4f0
 dotnet_naming_rule.private_constants_rule.import_to_resharper = as_predefined
 dotnet_naming_rule.private_constants_rule.severity = warning
-dotnet_naming_rule.private_constants_rule.style = pascal_case
+dotnet_naming_rule.private_constants_rule.style = all_upper_style
 dotnet_naming_rule.private_constants_rule.symbols = private_constants_symbols
 dotnet_naming_rule.private_instance_fields_rule.import_to_resharper = as_predefined
 dotnet_naming_rule.private_instance_fields_rule.severity = warning
@@ -328,10 +319,10 @@ dotnet_naming_symbols.property_symbols.applicable_accessibilities = *
 dotnet_naming_symbols.property_symbols.applicable_kinds = property
 dotnet_naming_symbols.types_and_namespaces_symbols.applicable_accessibilities = *
 dotnet_naming_symbols.types_and_namespaces_symbols.applicable_kinds = namespace,class,struct,enum,delegate
-dotnet_style_qualification_for_event = false:suggestion
-dotnet_style_qualification_for_field = false:suggestion
-dotnet_style_qualification_for_method = false:suggestion
-dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_event = true:none
+dotnet_style_qualification_for_field = true:none
+dotnet_style_qualification_for_method = true:none
+dotnet_style_qualification_for_property = true:none
 
 # ReSharper inspection severities
 resharper_arrange_redundant_parentheses_highlighting = hint
@@ -344,29 +335,11 @@ resharper_redundant_base_qualifier_highlighting = warning
 resharper_suggest_var_or_type_built_in_types_highlighting = hint
 resharper_suggest_var_or_type_elsewhere_highlighting = hint
 resharper_suggest_var_or_type_simple_types_highlighting = hint
+
 [*.{cs,vb}]
 dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
-dotnet_style_predefined_type_for_member_access = true:suggestion
+dotnet_style_predefined_type_for_member_access = false:suggestion
 dotnet_style_qualification_for_field = false:silent
 dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:silent
 dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:silent
 
-[*.{appxmanifest,asax,ascx,aspx,axaml,axml,build,config,cs,cshtml,csproj,css,dbml,discomap,dtd,htm,html,js,json,jsproj,jsx,lsproj,master,njsproj,nuspec,paml,proj,props,proto,razor,resjson,resw,resx,skin,StyleCop,targets,tasks,ts,tsx,vb,vbproj,xaml,xamlx,xml,xoml,xsd}]
-indent_style = tab
-indent_size = tab
-tab_width = 4
-
-[*.{appxmanifest,axml,build,config,csproj,dbml,discomap,dtd,jsproj,lsproj,njsproj,nuspec,proj,props,proto,resw,resx,StyleCop,targets,tasks,vbproj,xml,xsd}]
-indent_style = tab
-indent_size = tab
-tab_width = 4
-
-[*.{asax,ascx,aspx,axaml,cs,cshtml,css,htm,html,js,jsx,master,paml,razor,skin,ts,tsx,vb,xaml,xamlx,xoml}]
-indent_style = space
-indent_size = 4
-tab_width = 4
-
-[*.{json,resjson}]
-indent_style = space
-indent_size = 2
-tab_width = 2

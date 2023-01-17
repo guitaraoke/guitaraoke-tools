@@ -11,7 +11,7 @@ public class FFProbeStream {
     public int Height { get; set; }
     private string rFrameRate = "";
     public string NBFrames { get; set; } = "";
-    public int Frames => int.Parse(NBFrames);
+    public int Frames => Int32.Parse(NBFrames);
     public int RFrameRateNumerator { get; private set; }
     public int RFrameRateDenominator { get; private set; }
     public string RFrameRate {
@@ -20,8 +20,8 @@ public class FFProbeStream {
             rFrameRate = value;
             var tokens = rFrameRate.Split("/");
             if (tokens.Length != 2) throw new Exception($"Could not calculate FPS from RFrameRate {RFrameRate}");
-            RFrameRateNumerator = int.Parse(tokens[0]);
-            RFrameRateDenominator = int.Parse(tokens[1]);
+            RFrameRateNumerator = Int32.Parse(tokens[0]);
+            RFrameRateDenominator = Int32.Parse(tokens[1]);
             FPS = RFrameRateNumerator / (float) RFrameRateDenominator;
         }
     }

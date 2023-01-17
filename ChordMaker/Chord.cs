@@ -7,6 +7,8 @@ public class Chord {
     public float Time { get; set; }
     public string Name { get; set; }
     public string ExtraBit { get; set; }
+    public string FullName => Name + ExtraBit;
+    public string FullPrettyNameWithoutBass => (PrettyName + PrettyExtraBit).Split('/').First();
     public float Duration { get; set; } = 0f;
     public string PrettyName => Name.Replace("b", "♭").Replace("#", "♯");
     public string PrettyExtraBit => ExtraBit.Replace("b", "♭").Replace("#", "♯");
@@ -22,7 +24,7 @@ public class Chord {
             var tokens = regex.Split(line.Trim());
             Console.WriteLine(tokens[0]);
             if (tokens.Length > 1) {
-                Time = (float) (double.Parse(tokens[0].Trim()));
+                Time = (float) (Double.Parse(tokens[0].Trim()));
                 (Name, ExtraBit) = ParseChord(tokens[1].Trim());
             }
         }

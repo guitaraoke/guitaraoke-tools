@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ChordMaker": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Dropbox\\Creative\\Guitaraoke\\2 Mixes\\Georgia Satellites - Battleship Chains - Guitaraoke.mp4\" 10"
+    }
+  }
+}

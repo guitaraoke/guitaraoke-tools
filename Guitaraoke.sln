@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChordMaker", "ChordMaker\ChordMaker.csproj", "{6688ABF1-8BB1-4E9A-BECC-092AECA1E716}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rechorder", "Rechorder\Rechorder.csproj", "{D62B38B3-A35A-436E-9E2B-5E7F7FFDAF84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitaraokeTools.Tests", "GuitaraokeTools.Tests\GuitaraokeTools.Tests.csproj", "{C7F59FF0-8724-4461-85E7-C678EF92B66D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6688ABF1-8BB1-4E9A-BECC-092AECA1E716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6688ABF1-8BB1-4E9A-BECC-092AECA1E716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6688ABF1-8BB1-4E9A-BECC-092AECA1E716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6688ABF1-8BB1-4E9A-BECC-092AECA1E716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D62B38B3-A35A-436E-9E2B-5E7F7FFDAF84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D62B38B3-A35A-436E-9E2B-5E7F7FFDAF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D62B38B3-A35A-436E-9E2B-5E7F7FFDAF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D62B38B3-A35A-436E-9E2B-5E7F7FFDAF84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEC1092A-9C54-4CB5-9027-CF16F3ECDE3D}
+	EndGlobalSection
+EndGlobal

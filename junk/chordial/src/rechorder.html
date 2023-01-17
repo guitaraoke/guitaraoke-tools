@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chordial</title>
+  </head>
+  <body>
+    <video
+      id="track"
+      src="wav/Europe - The Final Countdown - Guitaraoke.mp4"
+      controls="true"
+      style="width: 640px; height: 360px; position: absolute; top: 60px; right: 5px;"
+      playbackRate="2.0"
+    ></video><br />
+    <input
+      type="text"
+      id="chord-list"
+      value="[Intro]F#m D Bm E C#/E# F#m D Bm E C#/E# F#m D Bm E C#/E# F#m D Bm E C#/E# F#m E/G# A D C# F#m D Bm E F#m D Bm E F#m E/G# A D C# F#m [Verse]F#m Bm F#m E/G# A D E A E/G# F#m E D C#m E [Chorus] F#m D Bm E F#m D Bm E (VERSE)F#m Bm F#m E/G# A D E A E/G# F#m E D C#m E (CHORUS)F#m D Bm E F#m D Bm E F#m E A D C# F# (SOLO)Bm A/C# D G Em A Bm F#m Bm A/C# D G Em A Bm C# F#m D Bm E F#m D Bm E F#m E/G# A D C# F#m D Bm E F#m D Bm E F#m E/G# A D C# F#m D Bm E F#m D Bm E F#m E/G# A D C# F#m"
+      style="width: 100%;"
+    /><br /><br />
+    <textarea id="chords" style="width: 400px; height: 800px; float: left; margin: 0 20px;"></textarea>
+    <div style="font-size: 200%; margin: 20px; font-weight: bold;" id="next-chord">F#</div>
+  </body>
+  <script type="module">
+    import { Note, Chord, Interval } from '@tonaljs/tonal'
+    import * as Detect from 'tonal-detect'
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext
+    const audioElement = document.querySelector('#track')
+    const chordList = document.getElementById('chord-list').value.split(/ +/)
+    var running = false;
+    var chord = "";
+    document.addEventListener('click', function () {
+      if (running) {
+        textarea.value += audioElement.currentTime + ':' + chord + '\n';
+        textarea.scrollTop = textarea.scrollHeight;
+        document.getElementById('chord-list').value = chordList.join(' ');
+      } else {
+        running = true;
+        // const audioContext = new AudioContext()
+        // const track = audioContext.createMediaElementSource(audioElement)
+        // track.connect(audioContext.destination)
+        // const startTime = audioContext.getOutputTimestamp().contextTime;
+        audioElement.playbackRate = 2.0;
+        audioElement.play();
+        // window.startTime = startTime
+        // window.audioContext = audioContext
+      }
+      chord = chordList.shift();
+      document.getElementById("next-chord").innerText = chord;
+    });
+    // // pass it into the audio context
+
+    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure)
+    function onMIDIFailure() {
+      console.log('Could not access your MIDI devices.')
+    }
+
+    function onMIDISuccess(midiAccess) {
+      var inputs = midiAccess.inputs
+      for (var input of midiAccess.inputs.values())
+        input.onmidimessage = getMIDIMessage
+    }
+    const textarea = document.getElementById('chords')
+    window.pianoKeys = []
+    window.chording = false
+    function getMIDIMessage(event) {
+      switch (event.data[0] & 0xf0) {
+        case 0x90:
+          if (!window.chording) {
+            if (window.audioContext)
+              window.chordTime = window.audioContext.getOutputTimestamp().contextTime;
+            window.pianoKeys = [event.data[1] & 0x7f]
+            window.chording = true
+          } else {
+            window.pianoKeys.push(event.data[1] & 0x7f)
+          }
+          break
+        case 0x80:
+          if (window.chording) {
+            window.chording = false
+            var notes = window.pianoKeys
+              .map(Note.fromMidi)
+              .map((note) => note.replace(/[0-9]+/, ''))
+            console.log(notes)
+            var chord = Chord.detect(notes)
+              .map((c) => c.replace(/\/.*/, '').replace(/M/, ''))
+              .sort((a, b) => a.length - b.length)
+            chord = chord[0]
+            chords.value += window.chordTime + ':' + chord + '\n'
+            window.chordTime = 0
+            window.pianoKeys = []
+          }
+          // console.log(window.audioContext.currentTime - window.startTime);
+          // console.log(event.data[1] & 0x7f)
+          break
+      }
+    }
+  </script>
+</html>
