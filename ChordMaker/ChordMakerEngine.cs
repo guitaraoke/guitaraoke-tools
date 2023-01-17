@@ -8,50 +8,35 @@ using Newtonsoft.Json.Serialization;
 using SixLabors.ImageSharp;
 
 public class ChordMakerEngine {
-	private readonly FilePathWrangler pathWrangler;
-	const int fpsMultiplier = 2;
-
-	public ChordMakerEngine(FilePathWrangler pathWrangler) {
-		this.pathWrangler = pathWrangler;
-	}
-
+	const int FPS_MULTIPLIER = 2;
+	
 	public void MakeChords(string videoPath, bool draft, float duration) {
+
+		var job = new VideoJob(videoPath, draft);
+
 		const int MAX_CHORD_SPEED = 140; // Maximum chord speed in pixels per second
 		const int MIN_CHORD_SPEED = 100; //
 
 		var stats = GetVideoStats(videoPath);
-		var FPS = (float) Math.Round(stats.FPS, (draft ? 1 : fpsMultiplier));
+		var fps = (float) Math.Round(stats.FPS, draft ? 1 : FPS_MULTIPLIER);
 		var width = draft ? 640 : stats.Width;
 		var height = draft ? 360 : stats.Height;
-		var directory = Path.GetDirectoryName(videoPath);
-		var filename = Path.GetFileNameWithoutExtension(videoPath);
-
-		var chordTimesFilePath = pathWrangler.GetChordTimesTextFilePath(videoPath);
-		var chordWebmFilePath = pathWrangler.GetOverlayFilePath(videoPath);
-		var outputFilePath = pathWrangler.GetOutputFilePath(videoPath);
-
-		var lines = File.ReadAllLines(chordTimesFilePath).Where(line => !String.IsNullOrWhiteSpace(line));
-		var bareFileName = Path.GetFileNameWithoutExtension(videoPath);
-		var tokens = bareFileName.Split(" - ");
-		var artist = tokens[0];
-		var title = tokens[1];
-		var (r, g, b) = ((byte)0, (byte)0, (byte)0);
-		var overlayColor = Color.FromRgba(r, g, b, 127);
-		Console.WriteLine($"Artist: {artist}");
-		Console.WriteLine($"Title: {title}");
-		Console.WriteLine($"Color: ({r},{g},{b})");
+		
+		Console.WriteLine($"Artist: {job.Artist}");
+		Console.WriteLine($"Title: {job.Title}");
 		Console.WriteLine($"Size: {width}x{height}");
-		Console.WriteLine($"FPS: {FPS}");
+		Console.WriteLine($"FPS: {fps}");
 		Console.WriteLine($"r_frame_rate: {stats.RFrameRate}");
 		Console.WriteLine(String.Empty.PadRight(40, '-'));
 		Console.WriteLine($"Source:  {videoPath}");
-		Console.WriteLine($"Chords:  {chordTimesFilePath}");
-		Console.WriteLine($"Overlay: {chordWebmFilePath}");
-		Console.WriteLine($"Output:  {outputFilePath}");
+		Console.WriteLine($"Chords:  {job.ChordTimesFilePath}");
+		Console.WriteLine($"Overlay: {job.OverlayFilePath}");
+		Console.WriteLine($"Output:  {job.OutputFilePath}");
 
-		var chords = File.ReadAllLines(chordTimesFilePath).Select(line => new Chord(line))
+		var chords = File.ReadAllLines(job.ChordTimesFilePath).Select(line => new Chord(line))
 			.Where(chord => chord.Time >= 0)
 			.ToList();
+
 		for (var i = 1; i < chords.Count; i++) {
 			chords[i - 1].Duration = chords[i].Time - chords[i - 1].Time;
 		}
@@ -79,46 +64,45 @@ public class ChordMakerEngine {
 
 		Console.WriteLine($"Duration: {duration}");
 
-		var frameCount = (int) (duration * FPS * fpsMultiplier); // stats.Frames * 2; //  (int) ((chords.Max(pair => pair.Time) + 5) * FPS);
+		var frameCount = (int) (duration * fps * FPS_MULTIPLIER); // stats.Frames * 2; //  (int) ((chords.Max(pair => pair.Time) + 5) * FPS);
 
-		var fm = new FrameMaker(width, height, FPS * fpsMultiplier);
+		var fm = new FrameMaker(width, height, fps * FPS_MULTIPLIER);
 
-		//var frames = fm.CreateFrames(frameCount, chords, speed, overlayColor);
-		//var videoFramesSource = new RawVideoPipeSource(frames) { FrameRate = FPS * fpsMultiplier };
-		//var sw = new Stopwatch();
-		//sw.Start();
-		//FFMpegArguments
-		//	.FromPipeInput(videoFramesSource)
-		//	.OutputToFile($"{chordWebmFilePath}", overwrite: true, options => options.WithVideoCodec("libvpx-vp9"))
-		//	.ProcessSynchronously();
-		//sw.Stop();
-		//Console.WriteLine($"Generated {frameCount} frames in {sw.ElapsedMilliseconds} ms");
+		var frames = fm.CreateFrames(frameCount, chords, speed, job.OverlayColor);
+		var videoFramesSource = new RawVideoPipeSource(frames) { FrameRate = fps * FPS_MULTIPLIER };
+		var sw = new Stopwatch();
+		sw.Start();
+		FFMpegArguments
+			.FromPipeInput(videoFramesSource)
+			.OutputToFile($"{job.OverlayFilePath}", overwrite: true, options => options.WithVideoCodec("libvpx-vp9"))
+			.ProcessSynchronously();
+		sw.Stop();
+		Console.WriteLine($"Generated {frameCount} frames in {sw.ElapsedMilliseconds} ms");
 
+		
 		var startInfo = new ProcessStartInfo();
 		startInfo.CreateNoWindow = false;
 		startInfo.UseShellExecute = false;
 		startInfo.FileName = @"ffmpeg";
-		var ffmpegArguments = $"-i \"{videoPath}\" -c:v libvpx-vp9"
-		                      + $" -r {FPS * fpsMultiplier}"
-		                      + $" -i \"{chordWebmFilePath}\""
-		                      + $" -metadata artist=\"{artist}\""
-		                      + $" -metadata title=\"{title} (Guitaraoke Backing)\""
+		var ffmpegArguments = $"-i \"{job.SourceFilePath}\" -c:v libvpx-vp9"
+		                      + $" -r {fps * FPS_MULTIPLIER}"
+		                      + $" -i \"{job.OverlayFilePath}\""
+		                      + $" -metadata artist=\"{job.Artist}\""
+		                      + $" -metadata title=\"{job.Title} (Guitaraoke Backing)\""
 		                      + $" -metadata album=\"Guitaraoke\""
 		                      + $" -filter_complex \"[0:0][1:0]overlay\""
 		                      + $" -c:v libx264"
 		                      + $" -b:v 3200k "
 		                      + $" -y ";
 		if (duration < 60) ffmpegArguments += $" -ss 00:00:00 -t 00:00:{duration}";
-		ffmpegArguments += $" \"{outputFilePath}\"";
+		ffmpegArguments += $" \"{job.OutputFilePath}\"";
 
 		startInfo.Arguments = ffmpegArguments;
 		Console.WriteLine(ffmpegArguments);
 		using (var ffmpeg = Process.Start(startInfo)) ffmpeg.WaitForExit();
 
 		Console.WriteLine("Done");
-
-		Console.WriteLine();
-		Console.WriteLine($"{outputFilePath}");
+		Console.WriteLine($"{job.OutputFilePath}");
 	}
 
 

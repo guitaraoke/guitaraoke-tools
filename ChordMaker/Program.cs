@@ -6,6 +6,6 @@ if (args.Any(arg => Single.TryParse(arg, out duration))) {
 	duration = Single.MaxValue;
 }
 var draft = args.Any(arg => arg == "draft");
-var wrangler = new FilePathWrangler("D:\\Dropbox\\Creative\\Guitaraoke");
-var engine = new ChordMakerEngine(wrangler);
+
+var engine = new ChordMakerEngine();
 engine.MakeChords(videoPath, draft, duration);
