@@ -30,6 +30,7 @@ function ensurePlayerCreated() {
 }
 
 function rechorder(file) {
+	
     document.getElementById("chord-names-div").addEventListener("click", function (event) {
         var player = ensurePlayerCreated();
         if (event.target.tagName == 'SPAN') {
@@ -60,6 +61,15 @@ function rechorder(file) {
             return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
         }
     });
+	var flats = {
+		"A#": "Bb",
+		"B#": "C",
+		"C#": "Db",
+		"D#": "Eb",
+		"E#": "F",
+		"F#": "Gb",
+		"G#": "Ab"
+	};
 
     const video = document.querySelector("video");
     const clock = document.getElementById('clock');
@@ -121,12 +131,19 @@ function rechorder(file) {
             highlightChord(text, chords[chord].index, chords[chord][0].trim().length);
             video.play();
         }
-    });
+	});
 
-    document.getElementById('go-button').focus();
+	document.getElementById('go-button').focus();
+
+	function flattenChords(text) {
+		for (const [key, value] of Object.entries(flats)) {
+			text = text.replaceAll(key, value);
+		}
+		return text;
+	}
 
     function highlightAllChords(element) {
-        let text = element.innerText;
+        let text = flattenChords(element.innerText);
         var chords = extractChords(text);
         let html = '';
         let index = 0;
@@ -186,9 +203,6 @@ function rechorder(file) {
         container.innerHTML = "";
         var textarea = document.getElementById("chord-times-textarea")
         var lineHeight = parseInt(window.getComputedStyle(textarea)["line-height"]);
-
-        
-        console.log(lineHeight);
         for(var i = 0; i < chords.length; i++) {
             var span = document.createElement('span');
             span.style.top = (4 + (i * lineHeight)) + "px";

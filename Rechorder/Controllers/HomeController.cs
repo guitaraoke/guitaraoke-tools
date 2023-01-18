@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Rechorder.Models;
 using System.IO;
@@ -16,7 +16,7 @@ public class HomeController : Controller {
     public IActionResult Index(string file = "") {
         var finishedFilePath = Directory.GetParent(RootPath).FullName;
         var finishedFiles = Directory
-            .GetFiles(Path.Combine(finishedFilePath, "4 Finished"))
+            .GetFiles(Path.Combine(finishedFilePath, "5 Output"))
             .Select(f => Path.GetFileName(f));           ;
         foreach(var ff in finishedFiles) logger.LogInformation(ff);
 

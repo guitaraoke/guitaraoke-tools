@@ -28,7 +28,7 @@ public class ChordMakerEngine {
 		Console.WriteLine($"Overlay: {job.OverlayFilePath}");
 		Console.WriteLine($"Output:  {job.OutputFilePath}");
 
-		var chords = File.ReadAllLines(job.ChordTimesFilePath).Select(line => new Chord(line))
+		var chords = (await File.ReadAllLinesAsync(job.ChordTimesFilePath)).Select(line => new Chord(line))
 			.Where(chord => chord.Time >= 0)
 			.ToList();
 
@@ -67,7 +67,6 @@ public class ChordMakerEngine {
 		sw.Stop();
 		Console.WriteLine($"Generated {frameCount} frames in {sw.ElapsedMilliseconds} ms");
 
-
 		var startInfo = new ProcessStartInfo();
 		startInfo.CreateNoWindow = false;
 		startInfo.UseShellExecute = false;
@@ -90,6 +89,28 @@ public class ChordMakerEngine {
 		using (var ffmpeg = Process.Start(startInfo)) ffmpeg.WaitForExit();
 
 		Console.WriteLine("Done");
+		var color = Console.ForegroundColor;
+		Console.ForegroundColor = ConsoleColor.Magenta;
+		Console.WriteLine(@"                                                                                                                                                                                   
+#############               #########       ########        ########  ######################   ### 
+#::::::::::::###          ##:::::::::##     #:::::::#       #::::::#  #::::::::::::::::::::#  ##:##
+#:::::::::::::::##      ##:::::::::::::##   #::::::::#      #::::::#  #::::::::::::::::::::#  #:::#
+###:::::#####:::::#    #:::::::###:::::::#  #:::::::::#     #::::::#  ##::::::#########::::#  #:::#
+  #:::::#    #:::::#   #::::::#   #::::::#  #::::::::::#    #::::::#    #:::::#       ######  #:::#
+  #:::::#     #:::::#  #:::::#     #:::::#  #:::::::::::#   #::::::#    #:::::#               #:::#
+  #:::::#     #:::::#  #:::::#     #:::::#  #:::::::#::::#  #::::::#    #::::::##########     #:::#
+  #:::::#     #:::::#  #:::::#     #:::::#  #::::::# #::::# #::::::#    #:::::::::::::::#     #:::#
+  #:::::#     #:::::#  #:::::#     #:::::#  #::::::#  #::::#:::::::#    #:::::::::::::::#     #:::#
+  #:::::#     #:::::#  #:::::#     #:::::#  #::::::#   #:::::::::::#    #::::::##########     #:::#
+  #:::::#     #:::::#  #:::::#     #:::::#  #::::::#    #::::::::::#    #:::::#               ##:##
+  #:::::#    #:::::#   #::::::#   #::::::#  #::::::#     #:::::::::#    #:::::#       ######   ### 
+###:::::#####:::::#    #:::::::###:::::::#  #::::::#      #::::::::#  ##::::::########:::::#       
+#:::::::::::::::##      ##:::::::::::::##   #::::::#       #:::::::#  #::::::::::::::::::::#   ### 
+#::::::::::::###          ##:::::::::##     #::::::#        #::::::#  #::::::::::::::::::::#  ##:##
+#############               #########       ########         #######  ######################   ###");
+		Console.ForegroundColor = color;
+		Console.WriteLine();
+		Console.WriteLine();
 		Console.WriteLine($"{job.OutputFilePath}");
 	}
 
