@@ -8,7 +8,6 @@ public class Folder {
 
 public class FilePathWrangler {
 
-
 	private const string RootPath = "D:\\Dropbox\\Creative\\Guitaraoke";
 
 	private static string QualifyFileName(string folder, string filePath, string suffix)
