@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChordMaker", "ChordMaker\Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rechorder", "Rechorder\Rechorder.csproj", "{D62B38B3-A35A-436E-9E2B-5E7F7FFDAF84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitaraokeTools.Tests", "GuitaraokeTools.Tests\GuitaraokeTools.Tests.csproj", "{C7F59FF0-8724-4461-85E7-C678EF92B66D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitaraokeTools.Tests", "GuitaraokeTools.Tests\GuitaraokeTools.Tests.csproj", "{C7F59FF0-8724-4461-85E7-C678EF92B66D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prprojector", "Prprojector\Prprojector.csproj", "{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7F59FF0-8724-4461-85E7-C678EF92B66D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

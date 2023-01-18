@@ -1,11 +1,13 @@
+public class Folder {
+	public const string SOURCES = "1 Sources";
+	public const string MIXES = "2 Mixes";
+	public const string CHORDS = "3 Chords";
+	public const string OVERLAYS = "4 Overlays";
+	public const string OUTPUT = "5 Output";
+}
+
 public class FilePathWrangler {
 
-	private class Folder {
-		public const string MIXES = "2 Mixes";
-		public const string CHORDS = "3 Chords";
-		public const string OVERLAYS = "4 Overlays";
-		public const string OUTPUT = "5 Output";
-	}
 
 	private const string RootPath = "D:\\Dropbox\\Creative\\Guitaraoke";
 
