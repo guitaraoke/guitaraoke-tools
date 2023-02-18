@@ -136,9 +136,9 @@ function rechorder(file) {
 	document.getElementById('go-button').focus();
 
 	function flattenChords(text) {
-		for (const [key, value] of Object.entries(flats)) {
-			text = text.replaceAll(key, value);
-		}
+		//for (const [key, value] of Object.entries(flats)) {
+		//	text = text.replaceAll(key, value);
+		//}
 		return text;
 	}
 
