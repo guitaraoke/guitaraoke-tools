@@ -5,6 +5,8 @@ var sourcePath = Path.Combine(ROOT_PATH, Folder.SOURCES);
 foreach (var dir in Directory.GetDirectories(sourcePath)) {
 	var files = Directory.GetFiles(dir);
 	if (files.Any(f => f.EndsWith(".prproj"))) continue;
+	Console.WriteLine(dir);
+	foreach(var file in files) Console.WriteLine(file);
 	Console.WriteLine($"{dir} does not have a PRPROJ file - create it now?");
 	if ((Console.ReadKey(true).KeyChar | 32) == 'y') {
 		// do a replace on the template XML, populate artist and title, and save it.
