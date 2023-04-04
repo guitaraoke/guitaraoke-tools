@@ -5,8 +5,8 @@ function ChordPlayer(ac) {
         let parts = chordName.split(/\//);
         let chord = parts[0];
         const chordNotes = Tonal.Chord.get(chord, { sharps: true }).notes;
-        const notes = chordNotes.map(note => ({ 
-            note : note == 'E#' ? 'F' : note == 'B#' ? 'C' : note, 
+        const notes = chordNotes.map(note => ({
+            note : note == 'E#' ? 'F' : note == 'B#' ? 'C' : note,
             octave: (note >= 'C' ? 5 : 4)
         }));
         notes.unshift({note: chordNotes[0], octave: 3 });
@@ -30,7 +30,7 @@ function ensurePlayerCreated() {
 }
 
 function rechorder(file) {
-	
+
     document.getElementById("chord-names-div").addEventListener("click", function (event) {
         var player = ensurePlayerCreated();
         if (event.target.tagName == 'SPAN') {
@@ -114,6 +114,7 @@ function rechorder(file) {
     });
 
     document.getElementById('go-button').addEventListener("click", function (evt) {
+		console.log('yep');
         var player = ensurePlayerCreated();
         if (video.playing) {
             if (!(evt.ctrlKey)) {
@@ -124,6 +125,7 @@ function rechorder(file) {
             }
             chord++;
             highlightChord(text, chords[chord].index, chords[chord][0].trim().length);
+			drawDataBars();
         } else {
             chord = 0;
             text = chordsTextArea.value;
@@ -187,10 +189,7 @@ function rechorder(file) {
     });
 
     function drawDataBars() {
-        
-        var chordTimesList = document
-            .getElementById("chord-times-textarea").value;
-        
+        var chordTimesList = document.getElementById("chord-times-textarea").value;
         var chords = chordTimesList.split(/\n/)
             .filter(c => c.split)
             .map(c => c.split(/[: ]+/))
