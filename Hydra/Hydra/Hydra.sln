@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hydra.MediaPlayer", "Hydra.MediaPlayer\Hydra.MediaPlayer.csproj", "{DB03C414-3BA2-48C3-930F-B1D85470FF72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Player2", "Hydra.Player2\Hydra.Player2.csproj", "{FB777F96-31FC-4FA1-924A-5627F641E68D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Hacks", "Hydra.Hacks\Hydra.Hacks.csproj", "{8A473B48-C819-4CE6-8B25-C95A06E1C6CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB03C414-3BA2-48C3-930F-B1D85470FF72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB03C414-3BA2-48C3-930F-B1D85470FF72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB03C414-3BA2-48C3-930F-B1D85470FF72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB03C414-3BA2-48C3-930F-B1D85470FF72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB777F96-31FC-4FA1-924A-5627F641E68D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB777F96-31FC-4FA1-924A-5627F641E68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB777F96-31FC-4FA1-924A-5627F641E68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB777F96-31FC-4FA1-924A-5627F641E68D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A473B48-C819-4CE6-8B25-C95A06E1C6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A473B48-C819-4CE6-8B25-C95A06E1C6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A473B48-C819-4CE6-8B25-C95A06E1C6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A473B48-C819-4CE6-8B25-C95A06E1C6CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA507B29-F2F7-45AA-94C8-41AE4BDE41CA}
+	EndGlobalSection
+EndGlobal
