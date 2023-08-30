@@ -1,7 +1,10 @@
-const string ROOT_PATH = @"D:\Dropbox\Creative\Guitaraoke\";
-
-var templateFileXml = File.ReadAllText(Path.Combine(ROOT_PATH, "Artist - Title - Guitaraoke.prproj"));
-var sourcePath = Path.Combine(ROOT_PATH, Folder.SOURCES);
+var paths = new[] {
+	@"D:\Dropbox\Creative\Guitaraoke\",
+	@"C:\Users\Dylan\Dropbox\Creative\Guitaraoke\"
+};
+string rootPath = paths.First(Directory.Exists);
+var templateFileXml = File.ReadAllText(Path.Combine(rootPath, "Artist - Title - Guitaraoke.prproj"));
+var sourcePath = Path.Combine(rootPath, Folder.SOURCES);
 foreach (var dir in Directory.GetDirectories(sourcePath)) {
 	var files = Directory.GetFiles(dir);
 	if (files.Any(f => f.EndsWith(".prproj"))) continue;

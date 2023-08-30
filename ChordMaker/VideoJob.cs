@@ -2,10 +2,9 @@ using SixLabors.ImageSharp;
 
 public class VideoJob {
 
-	public VideoJob(string sourceFilePath, bool draft) {
-		
+	public VideoJob(string sourceFilePath) {
+
 		SourceFilePath = sourceFilePath;
-		Draft = draft;
 		var bareFileName = Path.GetFileNameWithoutExtension(sourceFilePath);
 		var tokens = bareFileName.Split(" - ");
 		Artist = tokens[0];
@@ -13,9 +12,7 @@ public class VideoJob {
 	}
 
 	public Color OverlayColor = Color.FromRgba(0, 0, 0, 127);
-
 	public string SourceFilePath { get; set; }
-	public bool Draft { get; }
 	public string Artist { get; init; }
 	public string Title { get; init; }
 	public string OutputFilePath => FilePathWrangler.GetOutputFilePath(SourceFilePath);

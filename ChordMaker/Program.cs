@@ -1,4 +1,7 @@
-const string ROOT_PATH = @"D:\\Dropbox\\Creative\\Guitaraoke\\";
+using ChordMaker;
+
+var paths = new[] { @"D:\Dropbox\Creative\Guitaraoke\", @"C:\Users\Dylan\Dropbox\Creative\Guitaraoke\" };
+var rootPath = paths.First(Directory.Exists);
 var engine = new ChordMakerEngine();
 
 var videoPath = args.Length > 0 ? args[0] : String.Empty;
@@ -14,7 +17,7 @@ var draft = args.Any(arg => arg == "draft");
 var songs = new List<string>();
 
 if (String.IsNullOrEmpty(videoPath) || !File.Exists(videoPath)) {
-	var fsw = new FileSystemWatcher(ROOT_PATH, "*.txt") {
+	var fsw = new FileSystemWatcher(rootPath, "*.txt") {
 		IncludeSubdirectories = true
 	};
 	fsw.Changed += FileDidAThing;
@@ -29,7 +32,7 @@ if (String.IsNullOrEmpty(videoPath) || !File.Exists(videoPath)) {
 		var key = Console.ReadKey(true).KeyChar & 15;
 		Console.WriteLine(key);
 		if (key < songs.Count) {
-			videoPath = Path.Combine(ROOT_PATH, Folder.MIXES, $"{songs[key]} - Guitaraoke.mp4");
+			videoPath = Path.Combine(rootPath, Folder.MIXES, $"{songs[key]} - Guitaraoke.mp4");
 			Console.WriteLine($"Encoding videoPath:");
 			await engine.MakeChords(videoPath, draft, duration);
 			songs.Remove(songs[key]);

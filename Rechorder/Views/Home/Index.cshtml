@@ -7,10 +7,10 @@
     @foreach (var file in Model.Files)
     {
       <a
-      href='@Url.Action("Index", "Home", new { file })'      
+      href='@Url.Action("Index", "Home", new { file })'
       class='@(Model.SelectedFile == file.FullName ? "selected" : "")'
       >@System.IO.Path.GetFileNameWithoutExtension(file.FullName).Replace(" - Guitaraoke", "")</a>
-      
+
     }
   </div>
   <div id="chord-names" style="position: relative;">
@@ -39,18 +39,18 @@
       <label for="playback-speed-18"><input type="radio" id="playback-speed-18" name="playback-speed" value="1.8" />
         1.8</label>
     </fieldset>
-    <input type="button" name="button" value="BHUNG" id="go-button" />
+    <input type="button" name="button" value="BUTTON" id="go-button" />
   </div>
   <div id="chord-times">
     <div id="chord-times-scroller-content">
       <textarea id="chord-times-textarea">@Model.ChordTimes</textarea>
-      <div id="data-bars"> </div>          
+      <div id="data-bars"> </div>
     </div>
   </div>
   <div><input type="text" name="" class="file-path" value="@Model.RootPath" /></div>
   <div><input type="text" name="" class="file-path" value="@Model.ChordNamesFilePath" /></div>
   <div><input type="text" name="" class="file-path" value="@Model.ChordTimesFilePath" /></div>
-  
+
 
 </div>
 @section Scripts {

@@ -16,7 +16,7 @@ public static class FFProbe {
 			CreateNoWindow = false,
 			UseShellExecute = false,
 			FileName = @"ffprobe",
-			RedirectStandardOutput = true
+			RedirectStandardOutput = true	
 		};
 		var arguments = $"-v quiet -print_format json -show_format -show_streams \"{videoFilePath}\"";
 		startInfo.Arguments = arguments;

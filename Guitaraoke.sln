@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rechorder", "Rechorder\Rech
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitaraokeTools.Tests", "GuitaraokeTools.Tests\GuitaraokeTools.Tests.csproj", "{C7F59FF0-8724-4461-85E7-C678EF92B66D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prprojector", "Prprojector\Prprojector.csproj", "{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prprojector", "Prprojector\Prprojector.csproj", "{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waverley", "Waverley\Waverley.csproj", "{4F8DF0A4-26B3-4249-8C7D-C268DA844766}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC569A0F-4AAE-41D4-A81F-42AEF1C46F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8DF0A4-26B3-4249-8C7D-C268DA844766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8DF0A4-26B3-4249-8C7D-C268DA844766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8DF0A4-26B3-4249-8C7D-C268DA844766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8DF0A4-26B3-4249-8C7D-C268DA844766}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

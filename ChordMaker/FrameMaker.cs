@@ -43,7 +43,8 @@ public class FrameMaker {
         }
     }
 
-    public IEnumerable<IVideoFrame> CreateFrames(int frameCount, List<Chord> chords, float speed, Color overlayColor) {
+    public IEnumerable<IVideoFrame> CreateFrames(int frameCount, List<Chord> chords,
+	    float speed, Color overlayColor) {
 
         var chordList = chords
             .GroupBy(c => c.FullPrettyNameWithoutBass)
@@ -104,8 +105,10 @@ public class FrameMaker {
             .Fill(options, overlayBrush, chordOverlay)
             .Fill(options, white, playhead)
         );
+
         ImageVideoFrameWrapper<Rgba32> emptyFrameWrapper = new(emptyFrame);
-        var assemblyInfo = getAssemblyInfo();
+
+        var assemblyInfo = GetAssemblyInfo();
         var assemblyInfoRect = MeasureText(assemblyInfo, tinyFontOptions);
         var assemblyInfoPoint = new PointF(((float) Width) - assemblyInfoRect.Width, ((float) Height) - assemblyInfoRect.Height);
         var stampFrame = emptyFrame.Clone(x => x.DrawText(assemblyInfo, tinyFont, white, assemblyInfoPoint));
@@ -149,13 +152,12 @@ public class FrameMaker {
                             if (chord.HasExtraBit) Console.Write(chord.ExtraBit);
                         }
                         image.Mutate(x => x.DrawText(chord.PrettyName, largeFont, white, point));
-                        if (chord.HasExtraBit) {
-                            var largeRect = MeasureText(chord.PrettyName, largeTextOptions);
-                            var smallRect = MeasureText(chord.ExtraBit, smallTextOptions);
-                            point.X += largeRect.Width;
-                            point.Y += (largeRect.Height - (1.12f * smallRect.Height));
-                            image.Mutate(x => x.DrawText(chord.PrettyExtraBit, smallFont, white, point));
-                        }
+                        if (!chord.HasExtraBit) continue;
+                        var largeRect = MeasureText(chord.PrettyName, largeTextOptions);
+                        var smallRect = MeasureText(chord.ExtraBit, smallTextOptions);
+                        point.X += largeRect.Width;
+                        point.Y += (largeRect.Height - (1.12f * smallRect.Height));
+                        image.Mutate(x => x.DrawText(chord.PrettyExtraBit, smallFont, white, point));
                     }
                     image.Mutate(x => x
                         .Fill(options, overlayBrush, chordOverlay)
@@ -171,11 +173,13 @@ public class FrameMaker {
         }
     }
 
-    private string getAssemblyInfo() {
+    private string GetAssemblyInfo() {
         var file = new FileInfo(this.GetType().Assembly.Location);
         return $"{file.Name} {file.LastWriteTime:O}";
     }
+
     private Dictionary<TextOptions, Dictionary<string, FontRectangle>> textSizeCache = new();
+
     private FontRectangle MeasureText(string text, TextOptions options) {
         if (!textSizeCache.ContainsKey(options)) textSizeCache[options] = new();
         if (textSizeCache[options].ContainsKey(text)) return textSizeCache[options][text];

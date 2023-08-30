@@ -171,7 +171,7 @@ function rechorder(file) {
 
     function extractChords(text) {
         let chords = [];
-        const regexp = /\b(NC|[A-G][b#]?(M|m|maj|aug|dim)?[5679]?(?:(b|add)(4|5|6|9|11|13))?(?:sus[24]|dim|aug)?(?:\/[A-G][b#]?)?)\s/g;
+        const regexp = /\b(NC|[A-G][b#]?(M|m|maj|aug|dim|\+|º)?[5679]?(b|#|aug|dim|\+|º)?\/?(?:(b|#|add)(4|5|6|9|11|13))?(?:sus[24]|dim|aug)?(?:\/[A-G][b#]?)?)\s/g;
         while (match = regexp.exec(text)) chords.push(match);
         return chords;
     }

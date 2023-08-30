@@ -8,10 +8,21 @@ public class Folder {
 
 public class FilePathWrangler {
 
-	private const string RootPath = "D:\\Dropbox\\Creative\\Guitaraoke";
+	private static string resolveRootPath(string filePath) {
+		var rootPath = Directory.GetParent(filePath).FullName;
+		while(! rootPath.EndsWith("Guitaraoke")) {
+			rootPath = Directory.GetParent(rootPath).FullName;
+		}
+		Console.WriteLine(rootPath);
+		return rootPath;
+	}
+	static string? rootPath;
 
-	private static string QualifyFileName(string folder, string filePath, string suffix)
-		=> Path.Combine(RootPath, folder, Path.GetFileNameWithoutExtension(filePath) + " - " + suffix);
+	private static string QualifyFileName(string folder, string filePath, string suffix) {
+		rootPath ??= resolveRootPath(filePath);
+		return Path.Combine(rootPath, folder, Path.GetFileNameWithoutExtension(filePath) + " - " + suffix);
+	}
+
 
 	public static string GetChordNamesTextFilePath(string filePath)
 		=> QualifyFileName(Folder.CHORDS, filePath, "chord names.txt");
